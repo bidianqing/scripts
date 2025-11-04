@@ -29,3 +29,15 @@ export KUBECONFIG=/etc/kubernetes/admin.conf
 kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
 
 kubectl get nodes
+
+
+sudo docker run -d \
+  --restart=unless-stopped \
+  --privileged \
+  --name=kuboard \
+  -p 80:80/tcp \
+  -p 10081:10081/tcp \
+  -e KUBOARD_ENDPOINT="http://$APISERVER_IP:80" \
+  -e KUBOARD_AGENT_SERVER_TCP_PORT="10081" \
+  -v /root/kuboard-data:/data \
+  eipwork/kuboard:v3
