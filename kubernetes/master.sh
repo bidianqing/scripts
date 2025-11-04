@@ -16,7 +16,9 @@ sudo apt-mark hold kubelet kubeadm kubectl
 
 sudo systemctl start kubelet
 
-kubeadm init --apiserver-advertise-address $(hostname -i) --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=NumCPU
+APISERVER_IP=$(ip -o route get 8.8.8.8 | awk '{print $7}' | tr -d '\n')
+echo "API Server 将绑定 IP: $APISERVER_IP"
+kubeadm init --apiserver-advertise-address $APISERVER_IP --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=NumCPU
 
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
