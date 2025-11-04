@@ -16,7 +16,7 @@ sudo apt-mark hold kubelet kubeadm kubectl
 
 sudo systemctl start kubelet
 
-kubeadm init --apiserver-advertise-address $(hostname -i) --pod-network-cidr=10.244.0.0/16
+kubeadm init --apiserver-advertise-address $(hostname -i) --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=NumCPU
 
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
